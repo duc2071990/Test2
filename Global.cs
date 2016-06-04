@@ -31,5 +31,15 @@ namespace BaiTest2
             }
             return text;
         }
+        public static string CutString(this string str)
+        {
+            str = str.NonUnicode();
+            str = str.Replace(" ", "");
+            str = str.Replace("-", "");
+            str = str.Replace("(", "");
+            str = str.Replace(")", "");
+            str = str.Replace("*", "");
+            return str;
+        }
     }
 }
