@@ -29,7 +29,7 @@ namespace BaiTest2
                 listLine = await FileIO.ReadLinesAsync(file);
                 for (int i = 0; i < listLine.Count(); i++)
                 {
-                    string newLine = CutString(listLine[i]);
+                    string newLine = listLine[i].CutString();
                     if (newLine == String.Empty)
                     {
                         continue;
@@ -90,62 +90,29 @@ namespace BaiTest2
             }
         }
 
-        private Models.Verse GetVerseDetail(string VerseTitle)
-        {
-            try
-            {
-                VerseTitle = CutString(VerseTitle);
-                VerseTitle = VerseTitle.ToUpper();
-                foreach (var verse in BOverse.list)
-                {
-                    string newName = CutString(verse.Name);
-                    if (VerseTitle == newName)
-                    {
-                        return verse;
-                    }
-                }
-                return null;
-            }
-            catch
-            {
-                return null;
-            }
-
-
-        }
 
         private void btn_Click(object sender, RoutedEventArgs e)
         {
             if (tbox.Text != string.Empty)
             {
-                List<string> fullVerse = new List<string>();
-                Models.Verse verse = GetVerseDetail(tbox.Text);
+                List<string> VerseDetail = new List<string>();
+                Models.Verse verse = BOverse.GetVerse(tbox.Text);
                 if (verse != null)
                 {
-                    fullVerse.Add(verse.Name);
+                    VerseDetail.Add(verse.Name);
                     for (int i = verse.Begin; i < verse.End; i++)
                     {
-                        fullVerse.Add(listLine[i]);
+                        VerseDetail.Add(listLine[i]);
                     }
                 }
                 else
                 {
-                    fullVerse.Add("Không tìm thấy bài thơ này.");
+                    VerseDetail.Add("Không tìm thấy bài thơ này.");
                 }
-                lb.ItemsSource = fullVerse;
+                lb.ItemsSource = VerseDetail;
 
             }
         }
 
-        private string CutString(string str)
-        {
-            str = str.NonUnicode();
-            str = str.Replace(" ", "");
-            str = str.Replace("-", "");
-            str = str.Replace("(", "");
-            str = str.Replace(")", "");
-            str = str.Replace("*", "");
-            return str;
-        }
     }
 }
