@@ -6,16 +6,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace BaiTest2
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+    
     public sealed partial class MainPage : Page
     {
-        string path = @"Assets\book1.txt";
         IList<string> listLine;
         ViewsModel.BOVerse BOverse = new ViewsModel.BOVerse();
         public MainPage()
@@ -28,13 +23,13 @@ namespace BaiTest2
         {
             try
             {
+                string path = @"Assets\book1.txt";
                 StorageFolder folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
                 StorageFile file = await folder.GetFileAsync(path);
                 listLine = await FileIO.ReadLinesAsync(file);
                 for (int i = 0; i < listLine.Count(); i++)
                 {
-                    string newLine = listLine[i].Replace(" ", "");
-                    newLine = newLine.Replace("*", "");
+                    string newLine = CutString(listLine[i]);
                     if (newLine == String.Empty)
                     {
                         continue;
@@ -100,6 +95,7 @@ namespace BaiTest2
             try
             {
                 VerseTitle = CutString(VerseTitle);
+                VerseTitle = VerseTitle.ToUpper();
                 foreach (var verse in BOverse.list)
                 {
                     string newName = CutString(verse.Name);
@@ -149,7 +145,6 @@ namespace BaiTest2
             str = str.Replace("(", "");
             str = str.Replace(")", "");
             str = str.Replace("*", "");
-            str = str.ToUpper();
             return str;
         }
     }
