@@ -13,5 +13,28 @@ namespace BaiTest2.ViewsModel
         {
             list = new List<Models.Verse>();
         }
+        public Models.Verse GetVerse(string VerseTitle)
+        {
+            try
+            {
+                VerseTitle = VerseTitle.CutString();
+                VerseTitle = VerseTitle.ToUpper();
+                foreach (var verse in list)
+                {
+                    string newName = verse.Name.CutString();
+                    if (VerseTitle == newName)
+                    {
+                        return verse;
+                    }
+                }
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+
+
+        }
     }
 }
