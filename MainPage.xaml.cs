@@ -90,7 +90,7 @@ namespace BaiTest2
             }
         }
 
-        private Models.Verse GetVerse(string VerseTitle)
+        private Models.Verse GetVerseDetail(string VerseTitle)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace BaiTest2
             if (tbox.Text != string.Empty)
             {
                 List<string> fullVerse = new List<string>();
-                Models.Verse verse = GetVerse(tbox.Text);
+                Models.Verse verse = GetVerseDetail(tbox.Text);
                 if (verse != null)
                 {
                     fullVerse.Add(verse.Name);
